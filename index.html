@@ -10,7 +10,16 @@
     <div id="mocha"></div>
     <script src="node_modules/mocha/mocha.js"></script>
     <script src="node_modules/expect/umd/expect.min.js"></script>
-    <script>mocha.setup('bdd');</script>
+    <script>mocha.setup('bdd');
+        if (hook.ctx && hook.ctx.currentTest) { 
+        hook.originalTitle = hook.originalTitle || hook.title;
+        hook.title =
+        hook.originalTitle + ' for "' + hook.ctx.currentTest.title + '"';
+    } else {     //new
+       let parent = hook.parent.title || 'root';    //new
+       hook.title += ' for "' + parent + '"';     //new
+    }
+  </script>
     <script src="index.js"></script>
     <script src="test/index-test.js"></script>
     <script>
